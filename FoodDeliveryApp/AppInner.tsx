@@ -1,3 +1,4 @@
+import messaging from '@react-native-firebase/messaging';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 import Orders from './src/pages/Orders';
@@ -17,6 +18,9 @@ import userSlice from './src/slices/user';
 import {useAppDispatch} from './src/store';
 import Config from 'react-native-config';
 import orderSlice from './src/slices/order';
+import usePermissions from './src/hooks/usePermissions';
+import SplashScreen from 'react-native-splash-screen';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -24,12 +28,10 @@ export type LoggedInParamList = {
   Delivery: undefined;
   Complete: {orderId: string};
 };
-
 export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
 };
-
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -40,15 +42,20 @@ function AppInner() {
 
   const [socket, disconnect] = useSocket();
 
+  // usePermissions();
+
   // 앱 실행 시 토큰 있으면 로그인하는 코드
+
   // splashscreen
   useEffect(() => {
     const getTokenAndRefresh = async () => {
       try {
         const token = await EncryptedStorage.getItem('refreshToken');
         if (!token) {
+          SplashScreen.hide();
           return;
         }
+
         const response = await axios.post(
           `${Config.API_URL}/refreshToken`,
           {},
@@ -72,6 +79,7 @@ function AppInner() {
         }
       } finally {
         // TODO : 스플래시 스크린 없애기
+        SplashScreen.hide();
       }
     };
     getTokenAndRefresh();
@@ -132,6 +140,27 @@ function AppInner() {
     );
   }, [dispatch]);
 
+  // 토큰 설정 - 푸시알림 관련
+  useEffect(() => {
+    async function getToken() {
+      try {
+        // app 처음 설치했을때 실행됨.
+        if (!messaging().isDeviceRegisteredForRemoteMessages) {
+          // remote message를 위해 기계를 등록함.
+          await messaging().registerDeviceForRemoteMessages();
+        }
+        //token redux 및 서버에 등록 -> puhs알림 보낼때 쓰겠징
+        const token = await messaging().getToken();
+        console.log('phone token', token);
+        dispatch(userSlice.actions.setPhoneToken(token));
+        return axios.post(`${Config.API_URL}/phonetoken`, {token});
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getToken();
+  }, [dispatch]);
+
   return (
     //  컨테이너 안에서 네비게이션 작동
     //  safeareaview가 적용된것
@@ -151,7 +180,14 @@ function AppInner() {
         <Tab.Screen
           name="Settings"
           component={Settings}
-          options={{title: '내 정보'}}
+          options={{
+            title: '내 정보',
+            headerTitleStyle: {
+              fontSize: 30,
+            },
+            tabBarIcon: () => <FontAwesomeIcon name="list" />,
+            unmountOnBlur: true,
+          }}
         />
       </Tab.Navigator>
     ) : (

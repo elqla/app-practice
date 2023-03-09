@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator();
 
 function Delivery() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Ing">
       <Stack.Screen name="Ing" component={Ing} options={{title: '내 오더'}} />
       {/* 지도위에 스택처럼 쌓기 위함 */}
       {/* 지도는 로딩시간이 오래걸리고, 로딩관련해선 메모리 문제가 생길수있음 */}
