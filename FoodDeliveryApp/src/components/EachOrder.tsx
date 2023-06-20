@@ -16,7 +16,7 @@ import {RootState} from '../store/reducer';
 import Config from 'react-native-config';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
-import NaverMapView, {Marker, Path} from 'react-native-nmap';
+// import NaverMapView, {Marker, Path} from 'react-native-nmap';
 
 interface Props {
   item: Order;
@@ -82,7 +82,7 @@ function EachOrder({item}: Props) {
               height: 200,
               marginTop: 10,
             }}>
-            <NaverMapView
+            {/* <NaverMapView
               style={{width: '100%', height: '100%'}}
               zoomControl={false}
               center={{
@@ -110,7 +110,7 @@ function EachOrder({item}: Props) {
               <Marker
                 coordinate={{latitude: end.latitude, longitude: end.longitude}}
               />
-            </NaverMapView>
+            </NaverMapView> */}
           </View>
           <View style={styles.buttonWrapper}>
             <Pressable onPress={onAccept} style={styles.acceptButton}>

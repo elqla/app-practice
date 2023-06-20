@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Dimensions, Text, View} from 'react-native';
-import NaverMapView, {Marker, Path} from 'react-native-nmap';
+// import NaverMapView, {Marker, Path} from 'react-native-nmap';
 import {useSelector} from 'react-redux';
 import {RootState} from '../store/reducer';
 import Geolocation from '@react-native-community/geolocation';
@@ -59,7 +59,7 @@ function Ing({navigation}: IngScreenProps) {
           width: Dimensions.get('window').width,
           height: Dimensions.get('window').height,
         }}>
-        <NaverMapView
+        {/* <NaverMapView
           style={{width: '100%', height: '100%'}}
           zoomControl={false}
           center={{
@@ -152,7 +152,7 @@ function Ing({navigation}: IngScreenProps) {
               navigation.push('Complete', {orderId: deliveries[0].orderId});
             }}
           />
-        </NaverMapView>
+        </NaverMapView> */}
       </View>
     </View>
   );

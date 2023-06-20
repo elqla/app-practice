@@ -13,10 +13,27 @@
         android:theme="@style/Theme.Myfirstandroidapp"
         tools:targetApi="31">
         <activity
+            android:name=".Bts4Acitivity"
+            android:theme="@style/Theme.AppCompat"
+            android:exported="false" />
+        <activity
+            android:name=".Bts3Acitivity"
+            android:theme="@style/Theme.AppCompat"
+            android:exported="false" />
+        <activity
+            android:name=".Bts2Acitivity"
+            android:theme="@style/Theme.AppCompat"
+            android:exported="false" />
+        <activity
+            android:name=".Bts1Activity"
+            android:theme="@style/Theme.AppCompat"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Myfirstandroidapp">
+            android:theme="@style/Theme.Myfirstandroidapp"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
