@@ -25,12 +25,12 @@ class App extends StatelessWidget {
                 const SizedBox(
                   height: 80,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      children: const [
+                      children: [
                         Text(
                           'Hey, Selena',
                           style: TextStyle(
@@ -74,9 +74,9 @@ class App extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Button(
                       text: 'Transfer',
                       bgColor: Color(0xFFF1B33B),
